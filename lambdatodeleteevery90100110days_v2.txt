@@ -18,7 +18,7 @@ def create_key(uname):
         SecretKey = response['AccessKey']['SecretAccessKey']
         json_data=json.dumps({'AccessKey':AccessKey,'SecretKey':SecretKey})
         secmanagerv=secretmanager.put_secret_value(SecretId=IAM_UserName,SecretString=json_data)
-        emailmsg="New "+AccessKey+" has been create. Please get the secret key value from secret manager"
+        emailmsg="New "+AccessKey+" has been created. Please get the secret key value from secret manager"
         ops_sns_topic ='arn:aws:sns:us-east-1:<accountnumber>:SecManagerKeyRotation'
         sns_send_report = boto3.client('sns',region_name='us-east-1')
         sns_send_report.publish(TopicArn=ops_sns_topic, Message=emailmsg, Subject="New Key created for user"+ IAM_UserName)
